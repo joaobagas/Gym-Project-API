@@ -4,7 +4,8 @@ namespace Gym_Project_API.DataAccess
 {
     public class DatabaseContext : DBContext
     {
-        // public virtual DbSet<UserDetails> UserDetails { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Password> Passwords { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
