@@ -1,4 +1,6 @@
-﻿namespace Gym_Project_API.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Gym_Project_API.Model
 {
     public class Password
     {
@@ -9,6 +11,8 @@
             Salt = salt;
         }
 
+        [Key]
+        public int Id { get; set; }
         public string Username { get; set; }
         public string HashedPassword { get; set; }
         public string Salt { get; set; }

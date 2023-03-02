@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\joaob\\source\\repos\\Gym Project API\\Gym Project API\\Gym Project API.csproj": {}
+    "C:\\Users\\joaob\\source\\repos\\Gym Project API\\Gym Project API\\Gym Project API\\Gym Project API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\joaob\\source\\repos\\Gym Project API\\Gym Project API\\Gym Project API.csproj": {
+    "C:\\Users\\joaob\\source\\repos\\Gym Project API\\Gym Project API\\Gym Project API\\Gym Project API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\joaob\\source\\repos\\Gym Project API\\Gym Project API\\Gym Project API.csproj",
+        "projectUniqueName": "C:\\Users\\joaob\\source\\repos\\Gym Project API\\Gym Project API\\Gym Project API\\Gym Project API.csproj",
         "projectName": "Gym Project API",
-        "projectPath": "C:\\Users\\joaob\\source\\repos\\Gym Project API\\Gym Project API\\Gym Project API.csproj",
+        "projectPath": "C:\\Users\\joaob\\source\\repos\\Gym Project API\\Gym Project API\\Gym Project API\\Gym Project API.csproj",
         "packagesPath": "C:\\Users\\joaob\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\joaob\\source\\repos\\Gym Project API\\Gym Project API\\obj\\",
+        "outputPath": "C:\\Users\\joaob\\source\\repos\\Gym Project API\\Gym Project API\\Gym Project API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\joaob\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,16 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.3, )"
+            },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
               "version": "[6.27.0, )"

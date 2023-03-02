@@ -24,19 +24,16 @@ namespace Gym_Project_API.Controllers
         /// <param name="userDTO">Carries data related to the user between the client and the API.</param>
         /// <returns>Action result with a JSON Web Token if successful or an error message.</returns>
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login([FromBody] UserDTO user)
+        public async Task<ActionResult<string>> Login(string username, string password)
         {
             try
             {
-                var dbPassword = _dbContext.Passwords.FirstOrDefault(p => p.Username == user.Username);
+                var dbPassword = _dbContext.Passwords.FirstOrDefault(p => p.Username == username);
                 if (dbPassword == null) return BadRequest("Username not found!");
-                string hash = Authentication.GenerateHash(user.Password, dbPassword.Salt);
-                if (hash.Equals(dbPassword.Hash)) return Ok(Authentication.CreateToken(user));
+                string hash = Authentication.GenerateHash(password, dbPassword.Salt);
+                if (hash.Equals(dbPassword.HashedPassword)) return Ok(Authentication.CreateToken(username, _configuration));
             }
-            catch (Exception)
-            {
-                return BadRequest("Something went wrong!");
-            }
+            catch { return BadRequest("Something went wrong!"); }
             return BadRequest("Wrong password!");
         }
 
@@ -46,35 +43,30 @@ namespace Gym_Project_API.Controllers
         /// <param name="userDTO">Carries data related to the user between the client and the API.</param>
         /// <returns>Action result and a string with message regarding the action result.</returns>
         [HttpPost("register")]
-        public async Task<ActionResult<string>> Register([FromBody] UserDTO userDTO)
+        public async Task<ActionResult<string>> Register(string username, string name, DateTime birthday, int height, 
+            int weight, string password)
         {
             try
             {
-                var dbPassword = _dbContext.Passwords.FirstOrDefault(p => p.Username == userDTO.Username);
-                var dbUser = _dbContext.Users.FirstOrDefault(u => u.Username == userDTO.Username);
+                var dbPassword = _dbContext.Passwords.FirstOrDefault(p => p.Username == username);
+                var dbUser = _dbContext.Users.FirstOrDefault(u => u.Username == username);
                 if (dbPassword != null | dbUser != null) return BadRequest("User already exists!");
             }
-            catch (Exception e)
-            {
-                return BadRequest("Something went wrong!");
-            }
+            catch { return BadRequest("Something went wrong!"); }
 
-            User user = new User("", new DateTime(), 1, 1, new DateTime());
+            User user = new User(username, name, birthday, height, weight, new DateTime());
 
             string salt = Authentication.GenerateSalt(5);
-            string hash = Authentication.GenerateHash(userDTO.Password, salt);
-            Password password = new Password(userDTO.Username, hash, salt);
+            string hash = Authentication.GenerateHash(password, salt);
+            Password passwordObject = new Password(username, hash, salt);
 
             try
             {
-                _dbContext.Users.AddAsync(user);
-                _dbContext.Passwords.AddAsync(password);
-                _dbContext.SaveChangesAsync();
+                await _dbContext.Users.AddAsync(user);
+                await _dbContext.Passwords.AddAsync(passwordObject);
+                await _dbContext.SaveChangesAsync();
             }
-            catch (Exception e)
-            {
-                return BadRequest("Something went wrong!");
-            }
+            catch { return BadRequest("Something went wrong!"); }
             return Ok("User created!");
         }
     }
